@@ -27,4 +27,5 @@ public class Job {
     // Tính bằng ngày
     private Integer rangeDay;
     private Long jobCategoryId;
+    private Long businessId;
 }

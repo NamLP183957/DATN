@@ -25,7 +25,7 @@ public class MailSender {
     public void sendMessageHtml(String to,
                                 String subject,
                                 String template,
-                                Map<String,Object> attributes) throws MessagingException{
+                                Map<String,Object> attributes) throws Exception{
 //        try {
             Context thymeleafContext = new Context();
             thymeleafContext.setVariables(attributes);

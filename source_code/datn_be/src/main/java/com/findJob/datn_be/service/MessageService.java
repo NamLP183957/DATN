@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessageService {
 
-    public String getMessage(String code) {
+    public static String getMessage(String code) {
         return Translator.toLocale(code);
     }
 }

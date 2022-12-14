@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/signup")
 public class SignupController {
@@ -22,6 +22,7 @@ public class SignupController {
 
     @GetMapping("/activate/{code}")
     public ResponseEntity<ServiceResult> activateEmailCode(@PathVariable String code) {
-        return ResponseEntity.ok()
+        return ResponseEntity.ok(signupService.activateEmailCode(code));
     }
+
 }

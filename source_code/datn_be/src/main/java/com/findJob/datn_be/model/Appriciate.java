@@ -17,4 +17,11 @@ public class Appriciate {
     private String content;
     private Double rate;
     private String fileName;
+
+    public Appriciate(Long applyId, String content, Double rate, String fileName) {
+        this.applyId = applyId;
+        this.content = content;
+        this.rate = rate;
+        this.fileName = fileName;
+    }
 }

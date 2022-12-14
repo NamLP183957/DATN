@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                        "/file/**")
 //                .permitAll()
                 .antMatchers("/api/v1/signup/**",
-                        "/api/v1/login",
+                        "/api/v1/login/**",
                         "/websocket", "/websocket/**",
                         "/file/**")
                 .permitAll()
