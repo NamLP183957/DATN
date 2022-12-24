@@ -1,4 +1,4 @@
-export const SERVICE_RESULT_STATUS = {
+export const ServiceStatus = {
     ERROR_RESULT: 404,
     SUCCESS_RESULT: 200
 }

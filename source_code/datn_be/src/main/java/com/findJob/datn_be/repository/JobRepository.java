@@ -12,4 +12,7 @@ public interface JobRepository extends JpaRepository<Job, Long>, JobRepositoryCu
 
     List<Job> findByJobCodeAndStatus(String jobCode, Integer status);
 
+    List<Job> findByJobCodeAndBusinessId(String jobCode, Long businessId);
+
+    List<Job> findByIdAndBusinessId(Long jobId, Long businessId);
 }

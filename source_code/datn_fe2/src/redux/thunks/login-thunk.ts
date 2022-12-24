@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { LoginRequest } from "../../types/request/LoginRequest";
 import { LoginResponse } from "../../types/response/LoginResponse";
 import { convertStrToArr, ROLES } from "../../utils/constants/role";
-import { SERVICE_RESULT_STATUS } from "../../utils/constants/status";
+import { ServiceStatus } from "../../utils/constants/status";
 import requestService from "../../utils/request-service";
 import { loadingData, loginFailure, loginSuccess } from "../actions/login-action";
 
@@ -11,7 +11,7 @@ export const login = (user: LoginRequest, navigate: any) =>async (dispatch: Disp
     try {
         dispatch(loadingData())
         const response = await requestService.post("/login", user);
-        if (response.data.status == SERVICE_RESULT_STATUS.SUCCESS_RESULT) {
+        if (response.data.status == ServiceStatus.SUCCESS_RESULT) {
             dispatch(loginSuccess(response.data.content));
             saveUserToLocalStorage(response.data.content);
             const roleStr = response.data.content.roles;

@@ -1,4 +1,3 @@
-import { LoginError } from "../../types/error/LoginError";
 import { LoginResponse } from "../../types/response/LoginResponse";
 
 export const LOADING_DATA = "LOADING_DATA";
