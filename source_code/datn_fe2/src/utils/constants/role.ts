@@ -4,10 +4,15 @@ export const ROLES = {
     ADMIN: 'Admin',
 }
 
-function convertStrToArr(roles: string): Array<string> {
-    var arr: Array<string> = [];
-    arr = roles.split("/");
-    return arr;
+function convertStrToArr(roles: string | null): Array<string> {
+    if (roles == null) {
+        return [];
+    } else {
+        var arr: Array<string> = [];
+        arr = roles.split("/");
+        return arr;
+    }
+    
 }
 
 export {convertStrToArr};

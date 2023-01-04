@@ -1,4 +1,5 @@
 import { Dispatch } from "redux";
+import { ApplyRequest } from "../../../types/request/ApplyRequest";
 import { JobSearchRequest } from "../../../types/request/JobSearchRequest";
 import { Constants } from "../../../utils/constants/constants";
 import { ServiceStatus } from "../../../utils/constants/status";
@@ -50,10 +51,11 @@ export const getJobDetail = (jobCode: string) =>async (dispatch: Dispatch) => {
     }
 }
 
-export const applyJob = (jobCode: string) =>async (dispatch: Dispatch) => {
+export const applyJob = (applyRequest: ApplyRequest) =>async (dispatch: Dispatch) => {
     try {
+        console.log("jobCodeReq: ", applyRequest.jobCode );
         dispatch(applyJobLoadingData());
-        const response = await requestService.post("/student/applyJob", jobCode, true)
+        const response = await requestService.post("/student/applyJob", applyRequest, true)
         if (response.data.status == ServiceStatus.SUCCESS_RESULT) {
             dispatch(applyJobSuccess(response.data.message))
         } else {

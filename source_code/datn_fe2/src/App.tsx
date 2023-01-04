@@ -32,10 +32,10 @@ function App() {
 
           {/* private routes */}
           <Route element={<RequireAuth allowedRoles={ROLES.STUDENT}  />}>
-            <Route path="/student/home" element={<Home />} />
+            <Route path="/student/home/*" element={<Home />} />
             <Route path="/student/job/:jobCode" element={<JobDetail />}/>
             <Route path="/student/apply" element={<Apply />} />
-            <Route path="/student/cv" element={<CV />} />
+            <Route path="/student/cv/*" element={<CV />} />
           </Route>
 
           <Route element={<RequireAuth allowedRoles={ROLES.BUSINESS} />}>

@@ -1,5 +1,6 @@
 package com.findJob.datn_be.controller.student;
 
+import com.findJob.datn_be.dto.request.ApplyRequest;
 import com.findJob.datn_be.dto.request.JobSearchRequest;
 import com.findJob.datn_be.security.UserPrincipal;
 import com.findJob.datn_be.service.JobService;
@@ -39,7 +40,8 @@ public class ApplyJobController {
 
     @PostMapping()
     public ResponseEntity<ServiceResult> applyJob(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                                                  @RequestBody String jobCode) {
-        return ResponseEntity.ok(jobService.applyJob(userPrincipal.getEmail(), jobCode));
+                                                  @RequestBody ApplyRequest req) {
+        System.out.println("jobCode: " + req.getJobCode() + "/");
+        return ResponseEntity.ok(jobService.applyJob(userPrincipal.getEmail(), req.getJobCode()));
     }
 }

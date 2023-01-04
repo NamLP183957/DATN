@@ -10,9 +10,10 @@ const Navbar = () => {
   const user: Partial<LoginResponse> = useSelector(
     (state: AppStateType) => state.login.user
   );
-  const roles: Array<string> = convertStrToArr(
-    user.roles == undefined ? "" : user.roles
-  );
+  // const roles: Array<string> = convertStrToArr(
+  //   user.roles == undefined ? "" : user.roles
+  // );
+  const roles: Array<string> = convertStrToArr(localStorage.getItem("roles"));
   const isLoggedIn = localStorage.getItem("isLoggedIn") == "true";
 
   return (

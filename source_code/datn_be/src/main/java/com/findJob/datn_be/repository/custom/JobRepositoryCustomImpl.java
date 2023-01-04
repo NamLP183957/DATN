@@ -19,8 +19,8 @@ public class JobRepositoryCustomImpl implements JobRepositoryCustom{
     @Override
     public List<JobResponse> getAllJob() {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT j.ID, j.JOB_CODE, j.JOB_NAME,j.description, j.REQUIREMENT, j.WORK_ADDRESS,\n");
-        sql.append("j.SALARY, j.STATUS, j.NOTE, j.RANGE_DAY, jc.ID, jc.NAME, bd.LOGO_FILE_NAME\n");
+        sql.append("SELECT j.ID as JOB_ID, j.JOB_CODE, j.JOB_NAME,j.description, j.REQUIREMENT, j.WORK_ADDRESS,\n");
+        sql.append("j.SALARY, j.STATUS, j.NOTE, j.RANGE_DAY, jc.ID as JOB_CATEGORY_ID, jc.NAME, bd.LOGO_FILE_NAME\n");
         sql.append( "FROM jobs j\n");
         sql.append("LEFT JOIN job_categories jc ON j.JOB_CATEGORY_ID = jc.ID\n");
         sql.append("LEFT JOIN business_descriptions bd ON bd.BUSINESS_ID = j.ID\n");
@@ -74,8 +74,8 @@ public class JobRepositoryCustomImpl implements JobRepositoryCustom{
     @Override
     public List<JobResponse> getJobDetail(String jobCode) {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT j.ID, j.JOB_CODE, j.JOB_NAME,j.description, j.REQUIREMENT, j.WORK_ADDRESS,\n");
-        sql.append("j.SALARY, j.STATUS, j.NOTE, j.RANGE_DAY, jc.ID, jc.NAME, bd.LOGO_FILE_NAME\n");
+        sql.append("SELECT j.ID as JOV_ID, j.JOB_CODE, j.JOB_NAME,j.description, j.REQUIREMENT, j.WORK_ADDRESS,\n");
+        sql.append("j.SALARY, j.STATUS, j.NOTE, j.RANGE_DAY, jc.ID as JOB_CATEGORY_ID, jc.NAME, bd.LOGO_FILE_NAME\n");
         sql.append( "FROM jobs j\n");
         sql.append("LEFT JOIN job_categories jc ON j.JOB_CATEGORY_ID = jc.ID\n");
         sql.append("LEFT JOIN business_descriptions bd ON bd.BUSINESS_ID = j.ID\n");

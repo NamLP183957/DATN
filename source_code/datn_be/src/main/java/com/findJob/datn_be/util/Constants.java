@@ -4,6 +4,8 @@ public class Constants {
     public static final int ERROR_RESULT = 404;
     public static final int SUCCESS_RESULT = 200;
 
+    public static final int WARN_RESULT = 300;
+
     public static final int CLOSE_JOB = 0;
     public static final int OPEN_JOB = 1;
 

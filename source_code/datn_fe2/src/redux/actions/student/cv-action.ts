@@ -1,5 +1,5 @@
 import { StudentCV } from "../../../types/response/StudentCV";
-import { CVLoadingDataActionType, CV_LOADING_DATA, GetCVFailureActionType, GetCVSuccessActionType, GET_CV_FAILURE, GET_CV_SUCCESS, UpdateAvatarFailureActionType, UpdateAvatarSuccessActionType, UpdateCVFailureActionType, UpdateCVSuccessActionType, UPDATE_AVATAR_FAILURE, UPDATE_AVATAR_SUCCESS, UPDATE_CV_FAILURE, UPDATE_CV_SUCCESS } from "../../action-types/student/cv-action-types";
+import { CVLoadingDataActionType, CV_LOADING_DATA, GetCVFailureActionType, GetCVSuccessActionType, GetCVWarnActionType, GET_CV_FAILURE, GET_CV_SUCCESS, GET_CV_WARN, UpdateAvatarFailureActionType, UpdateAvatarSuccessActionType, UpdateCVFailureActionType, UpdateCVSuccessActionType, UPDATE_AVATAR_FAILURE, UPDATE_AVATAR_SUCCESS, UPDATE_CV_FAILURE, UPDATE_CV_SUCCESS } from "../../action-types/student/cv-action-types";
 
 export const cVLoadingData = (): CVLoadingDataActionType => ({
     type: CV_LOADING_DATA
@@ -18,6 +18,11 @@ export const updateCVFailure = (errMsg: string): UpdateCVFailureActionType => ({
 export const getCVSuccess = (studentCV: StudentCV): GetCVSuccessActionType => ({
     type: GET_CV_SUCCESS,
     payload: studentCV
+})
+
+export const getCVWarn = (warnMsg: string): GetCVWarnActionType => ({
+    type: GET_CV_WARN,
+    payload: warnMsg
 })
 
 export const getCVFailure = (errMsg: string): GetCVFailureActionType => ({

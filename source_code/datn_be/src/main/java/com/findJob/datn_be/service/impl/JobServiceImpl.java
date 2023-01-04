@@ -74,7 +74,10 @@ public class JobServiceImpl implements JobService {
         ServiceResult serviceResult = new ServiceResult();
         List<JobResponse> lstJobResponse = jobRepository.getJobDetail(jobCode);
         serviceResult.setStatus(Constants.SUCCESS_RESULT);
-        serviceResult.setContent(lstJobResponse);
+        if (lstJobResponse != null && lstJobResponse.size() > 0) {
+            serviceResult.setContent(lstJobResponse.get(0));
+        }
+
         return serviceResult;
     }
 
@@ -94,7 +97,7 @@ public class JobServiceImpl implements JobService {
                 return serviceResult;
             }
             Job job = jobs.get(0);
-            UserAccount businessAcc = userAccountRepository.findById(job.getId()).get();
+            UserAccount businessAcc = userAccountRepository.findById(job.getBusinessId()).get();
             List<JobTime> lstApplyingJobTime = jobTimeRepository.findByJobId(job.getId());
             // Kiem tra xem sinh vien co dang o trong mot cong viec nao khong
             // Neu co thi kiem tra thoi gian cua cong viec apply co trung voi cong viec hien tai hay khong
@@ -103,18 +106,20 @@ public class JobServiceImpl implements JobService {
                 serviceResult.setStatus(Constants.ERROR_RESULT);
                 serviceResult.setMessage(validTimeJob);
             } else {
-                Apply apply = new Apply(userAccount.getId() , job.getId(), new Date(), Constants.APPLYING);
+                Apply apply = new Apply(userAccount.getId(), job.getId(), new Date(), Constants.APPLYING);
                 applyRepository.save(apply);
-
+                System.out.println("save successfull");
                  // Gui mail thong bao cho doanh nghiep
-                String subject = "FIND JOB -ỨNG VIÊN ỨNG TUYỂN";
+                String subject = "FIND JOB - ỨNG VIÊN ỨNG TUYỂN";
                 String template = "apply-job";
                 Map<String, Object> attributes = new HashMap<>();
                 attributes.put("applicant", userAccount.getEmail());
-                attributes.put("jobName", job.getJobCode() + "-" + job.getJobName());
+                attributes.put("jobName", job.getJobCode() + " - " + job.getJobName());
 
                 try {
+                    System.out.println("before send email");
                     mailSender.sendMessageHtml(businessAcc.getEmail(), subject, template, attributes);
+                    System.out.println("after send email");
                 } catch (Exception e) {
                     serviceResult.setStatus(Constants.ERROR_RESULT);
                     serviceResult.setMessage(MessageService.getMessage("system.error"));

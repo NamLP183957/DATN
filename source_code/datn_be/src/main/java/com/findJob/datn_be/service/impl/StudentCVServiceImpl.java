@@ -40,9 +40,9 @@ public class StudentCVServiceImpl implements StudentCVSerivce {
                 if (studentCVDB != null) {
                     mapper.convertToEntity(studentCVDB, request);
                 } else {
-                    mapper.convertToEntity(request, userAccount.getId());
+                    studentCVDB = mapper.convertToEntity(request, userAccount.getId());
                 }
-
+                studentCVRepository.save(studentCVDB);
                 serviceResult.setStatus(Constants.SUCCESS_RESULT);
                 serviceResult.setMessage(MessageService.getMessage("student.cv.update.success"));
             }
@@ -60,8 +60,13 @@ public class StudentCVServiceImpl implements StudentCVSerivce {
             serviceResult.setMessage(MessageService.getMessage("unaothorize"));
         } else {
             StudentCV studentCV = studentCVRepository.findByStudentId(userAccount.getId());
-            serviceResult.setStatus(Constants.SUCCESS_RESULT);
-            serviceResult.setContent(studentCV);
+            if (studentCV == null) {
+                serviceResult.setStatus(Constants.WARN_RESULT);
+                serviceResult.setMessage(MessageService.getMessage("student.cv.null"));
+            } else {
+                serviceResult.setStatus(Constants.SUCCESS_RESULT);
+                serviceResult.setContent(studentCV);
+            }
         }
 
         return serviceResult;
