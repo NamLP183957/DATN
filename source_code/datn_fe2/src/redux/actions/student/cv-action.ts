@@ -5,9 +5,10 @@ export const cVLoadingData = (): CVLoadingDataActionType => ({
     type: CV_LOADING_DATA
 })
 
-export const updateCVSuccess = (sucMsg: string): UpdateCVSuccessActionType => ({
+export const updateCVSuccess = (cvUpdate: Partial<StudentCV>, sucMsg: string): UpdateCVSuccessActionType => ({
     type: UPDATE_CV_SUCCESS,
-    payload: sucMsg
+    payload: cvUpdate,
+    message: sucMsg
 }) 
 
 export const updateCVFailure = (errMsg: string): UpdateCVFailureActionType => ({

@@ -9,11 +9,19 @@ public interface JobService {
 
     ServiceResult searchJob(JobSearchRequest request);
 
-    ServiceResult getJobDetail(String jobCode);
+    ServiceResult getJobDetail(String jobCode, String email);
 
     ServiceResult applyJob(String email, String jobCode);
 
     ServiceResult getJobBelongBusiness(String email);
 
     ServiceResult updateJob(JobRequest jobRequest, String email);
+
+    ServiceResult getApplyingJob(String email);
+
+    ServiceResult getAppliedJob(String email);
+
+    ServiceResult searchBusinessJob(String businesEmail, JobSearchRequest request);
+
+    ServiceResult getBusinessJobDetail(String jobCode);
 }

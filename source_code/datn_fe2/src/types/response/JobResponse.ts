@@ -22,5 +22,7 @@ export type JobResponse = {
     jobCategoryName: string,
     businessLogoLink: string,
 
+    applyStatus: number
+
     lstJobTime: JobTimeResponse[]
 }

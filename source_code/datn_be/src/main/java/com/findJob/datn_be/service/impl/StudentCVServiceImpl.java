@@ -45,6 +45,7 @@ public class StudentCVServiceImpl implements StudentCVSerivce {
                 studentCVRepository.save(studentCVDB);
                 serviceResult.setStatus(Constants.SUCCESS_RESULT);
                 serviceResult.setMessage(MessageService.getMessage("student.cv.update.success"));
+                serviceResult.setContent(studentCVDB);
             }
         }
 

@@ -7,12 +7,16 @@ import MenuCard from "../../../components/menu-card/MenuCard";
 import ScrollButton from "../../../components/scroll-button/ScrollButton";
 import { AppStateType } from "../../../redux/reducers/root-reducer";
 import {
+  getAllBusiness,
   getAllJob,
+  getAllJobCategory,
   searchJob,
 } from "../../../redux/thunks/student/apply-job-thunk";
 import { JobSearchRequest } from "../../../types/request/JobSearchRequest";
 import { JobResponse } from "../../../types/response/JobResponse";
 import { businessName, jobCategory } from "./MenuData";
+import { JobCategory } from "../../../types/response/JobCategory";
+import { BusinessDescriptionResponse } from "../../../types/response/BusinessDescriptionResponse";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -22,6 +26,13 @@ const Home = () => {
   const loading: boolean = useSelector(
     (state: AppStateType) => state.applyJob.loading
   );
+  const jobCategories: Array<JobCategory> = useSelector(
+    (state: AppStateType) => state.applyJob.jobCategories
+  )
+  const businesses: Array<BusinessDescriptionResponse> = useSelector(
+    (state: AppStateType) => state.applyJob.businesses
+  )
+
   const [jobSearchRequest, setJobSearchRequest] = useState<JobSearchRequest>({
     lstBusinessName: [],
     lstCategoryName: [],
@@ -30,7 +41,8 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getAllJob());
-    console.log("jobs: ", jobs);
+    dispatch(getAllJobCategory());
+    dispatch(getAllBusiness());
   }, [dispatch]);
 
   const getJobs = (variables: JobSearchRequest): void => {
@@ -48,6 +60,8 @@ const Home = () => {
     setJobSearchRequest(newSearch);
   };
 
+  console.log("business: ", businesses)
+
   return (
     <div className="container d-flex">
       <ScrollButton />
@@ -59,7 +73,7 @@ const Home = () => {
           <h5>Ngành</h5>
           <li className="active mb-2" id="homeSubmenu">
             <CheckBox
-              list={jobCategory}
+              list={jobCategories}
               handleFilters={(filters) =>
                 handleFilters(filters, "lstCategoryName")
               }
@@ -68,7 +82,7 @@ const Home = () => {
           <h5>Doanh nghiệp</h5>
           <li className="active mb-2" id="homeSubmenu">
             <CheckBox
-              list={businessName}
+              list={businesses}
               handleFilters={(filters) =>
                 handleFilters(filters, "lstBusinessName")
               }
@@ -81,7 +95,8 @@ const Home = () => {
         <MenuCard
           data={jobs}
           loading={loading}
-          itemsPerPage={10}
+          itemsPerPage={16}
+          link="/student/code"
           searchByData={[
             { label: "Ngành", value: "jobCategory" },
             { label: "Doanh nghiệp", value: "businessName" },

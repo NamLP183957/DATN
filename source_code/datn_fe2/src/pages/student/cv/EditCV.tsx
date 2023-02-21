@@ -4,9 +4,11 @@ import React, {
   ChangeEvent,
   ChangeEventHandler,
   FormEvent,
+  useEffect,
   useState,
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { AppStateType } from "../../../redux/reducers/root-reducer";
 import { updateCV } from "../../../redux/thunks/student/cv-thunk";
 import { StudentCVRequest } from "../../../types/request/StudentCVRequest";
@@ -43,6 +45,10 @@ const EditCV = () => {
     additional,
   } = cv;
 
+  // useEffect(() => {
+  //   setCv(cvData);
+  // }, [cvData])
+  
   const onFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const cvEdit: StudentCVRequest = {
@@ -81,10 +87,10 @@ const EditCV = () => {
       ) : null}
       <form className="edit_personal_data" onSubmit={onFormSubmit}>
         <div className="form-group row">
-          <label className="col-sm-3 col-form-label personal_data_item">
+          <label className="col-sm-4 col-form-label personal_data_item">
             Họ:
           </label>
-          <div className="col-sm-6">
+          <div className="col-sm-7">
             <input
               type="text"
               // className={firstNameError ? 'form-control is-invalid' : 'form-control'}
@@ -99,10 +105,10 @@ const EditCV = () => {
         </div>
 
         <div className="form-group row">
-          <label className="col-sm-3 col-form-label personal_data_item">
+          <label className="col-sm-4 col-form-label personal_data_item">
             Tên đệm:
           </label>
-          <div className="col-sm-6">
+          <div className="col-sm-7">
             <input
               type="text"
               className="form-control"
@@ -115,10 +121,10 @@ const EditCV = () => {
         </div>
 
         <div className="form-group row">
-          <label className="col-sm-3 col-form-label personal_data_item">
+          <label className="col-sm-4 col-form-label personal_data_item">
             Tên:
           </label>
-          <div className="col-sm-6">
+          <div className="col-sm-7">
             <input
               type="text"
               // className={lastNameError ? 'form-control is-invalid' : 'form-control'}
@@ -133,10 +139,10 @@ const EditCV = () => {
         </div>
 
         <div className="form-group row">
-          <label className="col-sm-3 col-form-label personal_data_item">
+          <label className="col-sm-4 col-form-label personal_data_item">
             Số điện thoại:
           </label>
-          <div className="col-sm-6">
+          <div className="col-sm-7">
             <input
               type="text"
               className="form-control"
@@ -149,10 +155,10 @@ const EditCV = () => {
         </div>
 
         <div className="form-group row">
-          <label className="col-sm-3 col-form-label personal_data_item">
+          <label className="col-sm-4 col-form-label personal_data_item">
             Chuyên ngành:
           </label>
-          <div className="col-sm-6">
+          <div className="col-sm-7">
             <input
               type="text"
               className="form-control"
@@ -165,10 +171,10 @@ const EditCV = () => {
         </div>
 
         <div className="form-group row">
-          <label className="col-sm-3 col-form-label personal_data_item">
+          <label className="col-sm-4 col-form-label personal_data_item">
             Điểm mạnh:
           </label>
-          <div className="col-sm-6">
+          <div className="col-sm-7">
             <input
               type="text"
               className="form-control"
@@ -181,10 +187,10 @@ const EditCV = () => {
         </div>
 
         <div className="form-group row">
-          <label className="col-sm-3 col-form-label personal_data_item">
+          <label className="col-sm-4 col-form-label personal_data_item">
             Điểm yếu:
           </label>
-          <div className="col-sm-6">
+          <div className="col-sm-7">
             <input
               type="text"
               className="form-control"
@@ -197,10 +203,10 @@ const EditCV = () => {
         </div>
 
         <div className="form-group row">
-          <label className="col-sm-3 col-form-label personal_data_item">
+          <label className="col-sm-4 col-form-label personal_data_item">
             Giải thưởng:
           </label>
-          <div className="col-sm-6">
+          <div className="col-sm-7">
             <input
               type="text"
               className="form-control"
@@ -213,10 +219,10 @@ const EditCV = () => {
         </div>
 
         <div className="form-group row">
-          <label className="col-sm-3 col-form-label personal_data_item">
+          <label className="col-sm-4 col-form-label personal_data_item">
             Sở thích:
           </label>
-          <div className="col-sm-6">
+          <div className="col-sm-7">
             <input
               type="text"
               className="form-control"
@@ -229,10 +235,10 @@ const EditCV = () => {
         </div>
 
         <div className="form-group row">
-          <label className="col-sm-3 col-form-label personal_data_item">
+          <label className="col-sm-4 col-form-label personal_data_item">
             Nơi ở:
           </label>
-          <div className="col-sm-6">
+          <div className="col-sm-7">
             <input
               type="text"
               className="form-control"
@@ -245,10 +251,10 @@ const EditCV = () => {
         </div>
 
         <div className="form-group row">
-          <label className="col-sm-3 col-form-label personal_data_item">
+          <label className="col-sm-4 col-form-label personal_data_item">
             Bổ sung:
           </label>
-          <div className="col-sm-6">
+          <div className="col-sm-7">
             <input
               type="textarea"
               className="form-control"

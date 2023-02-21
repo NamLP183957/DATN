@@ -9,7 +9,6 @@ type PropsType = {
   colSize: number;
   link: string;
   btnName: string;
-  preUrl: string;
 };
 
 const JobCardItem: FC<PropsType> = ({
@@ -17,7 +16,6 @@ const JobCardItem: FC<PropsType> = ({
   colSize,
   link,
   btnName,
-  preUrl,
 }) => {
   return (
     <div key={job.id} className={`col-lg-${colSize}`}>

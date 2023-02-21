@@ -52,7 +52,7 @@ const CV = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container" >
       {loading ? (
         <Spinner />
       ) : (

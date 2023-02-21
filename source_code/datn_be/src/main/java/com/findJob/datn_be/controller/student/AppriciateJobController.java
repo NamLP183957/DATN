@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @PreAuthorize("hasAuthority('Student')")
 @RequestMapping("api/v1/student/appriciateJob")
-public class AppriciateJob {
+public class AppriciateJobController {
     private final AppriciateService appriciateService;
 
     @PostMapping

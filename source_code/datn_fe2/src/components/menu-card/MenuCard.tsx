@@ -13,6 +13,7 @@ type PropsType = {
   itemsPerPage: number;
   startFrom?: number;
   searchByData: Array<{ label: string; value: string }>;
+  link: string
 };
 
 const MenuCard: FC<PropsType> = ({
@@ -21,6 +22,7 @@ const MenuCard: FC<PropsType> = ({
   itemsPerPage,
   startFrom,
   searchByData,
+  link
 }) => {
   const {
     slicedData,
@@ -31,8 +33,6 @@ const MenuCard: FC<PropsType> = ({
     setFilteredData,
     setSearching,
   } = usePagination({ itemsPerPage, data, startFrom });
-  console.log("data: ", data);
-  console.log("slicedData: ", slicedData);
   return (
     <div className="container">
       <div className="container-fluid mt-12 ml-12">
@@ -55,9 +55,8 @@ const MenuCard: FC<PropsType> = ({
               <JobCardItem
                 job={job}
                 colSize={12}
-                link={"/student/job"}
+                link={link}
                 btnName="SHOW MORE"
-                preUrl="student"
               />
             ))}
           </>

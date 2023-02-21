@@ -30,5 +30,7 @@ public class JobResponse {
     private String jobCategoryName;
     private String businessLogoLink;
 
+    private Integer applyStatus;
+
     private List<JobTimeResponse> lstJobTime;
 }

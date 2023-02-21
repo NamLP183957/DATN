@@ -40,7 +40,7 @@ function App() {
 
           <Route element={<RequireAuth allowedRoles={ROLES.BUSINESS} />}>
             <Route path="/business/home" element={<BusinessHome />} />
-            <Route path="/business/job/:jobCode" element={<BusinessJobDetail />}/>
+            <Route path="/business/job/:jobCode/*" element={<BusinessJobDetail />}/>
             <Route path="/business/apply" element={<BusinessApply />} />
             <Route path="/business/apply/:jobCode/:id" element={<JobApplicant />}/>
             <Route path="/business/cv" element={<BusinessCV />} />

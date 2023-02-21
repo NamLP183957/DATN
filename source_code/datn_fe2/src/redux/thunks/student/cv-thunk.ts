@@ -10,7 +10,7 @@ export const updateCV = (studentCvRequest: StudentCVRequest) =>async (dispatch: 
         dispatch(cVLoadingData());
         const response = await requestService.post("/student/cv", studentCvRequest, true);
         if (response.data.status == ServiceStatus.SUCCESS_RESULT) {
-            dispatch(updateCVSuccess(response.data.message));
+            dispatch(updateCVSuccess(response.data.content, response.data.message));
         } else {
             dispatch(updateCVFailure(response.data.message));
         }

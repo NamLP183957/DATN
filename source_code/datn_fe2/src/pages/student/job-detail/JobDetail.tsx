@@ -11,6 +11,8 @@ import {
 } from "../../../redux/thunks/student/apply-job-thunk";
 import { ApplyRequest } from "../../../types/request/ApplyRequest";
 import { JobResponse } from "../../../types/response/JobResponse";
+import { JobTimeResponse } from "../../../types/response/JobTimeReponse";
+import { Constants } from "../../../utils/constants/constants";
 
 const JobDetail = () => {
   const dispatch = useDispatch();
@@ -37,6 +39,68 @@ const JobDetail = () => {
       jobCode: jobCode == null ? "" : jobCode,
     };
     dispatch(applyJob(applyRequest));
+  };
+
+  const buttonApply = (applyStatus: number) => {
+    if (applyStatus == Constants.NOT_APPLY_STUDENT) {
+      return (
+        <button
+          type="submit"
+          className="btn btn-success mt-2"
+          onClick={applyJob1}
+        >
+          ỨNG TUYỂN
+        </button>
+      );
+    } else if (applyStatus == Constants.APPLYIING_STUDENT) {
+      return (
+        <button type="submit" className="btn btn-warning mt-2">
+          ĐANG ỨNG TUYỂN
+        </button>
+      );
+    } else {
+      return (
+        <button type="submit" className="btn btn-danger mt-2">
+          ĐÃ ỨNG TUYỂN
+        </button>
+      );
+    }
+  };
+
+  const getTimeVal = (timeMap: JobTimeResponse[]) => {
+    if (timeMap.length <= 0) {
+      return "Không có";
+    } else {
+      return timeMap[0].startTime + " - " + timeMap[0].endTime;
+    }
+  };
+
+  const jobTimeVal = () => {
+    const jobTimes: JobTimeResponse[] = job.lstJobTime ? job.lstJobTime : [];
+    return (
+      <>
+        <div>
+          Thứ 2: <span />
+          {getTimeVal(jobTimes.filter((jobTime) => jobTime.dayOfWeek == "2"))}
+        </div>
+        <div>
+          Thứ 3: <span />
+          {getTimeVal(jobTimes.filter((jobTime) => jobTime.dayOfWeek == "3"))}
+        </div>
+        <div>
+          Thứ 4: <span />
+          {getTimeVal(jobTimes.filter((jobTime) => jobTime.dayOfWeek == "4"))}
+        </div>
+        <div>
+          Thứ 5: <span />
+          {getTimeVal(jobTimes.filter((jobTime) => jobTime.dayOfWeek == "5"))}
+        </div>
+        <div>
+          Thứ 6: <span />
+          {getTimeVal(jobTimes.filter((jobTime) => jobTime.dayOfWeek == "6"))}
+        </div>
+      </>
+    );
   };
 
   return (
@@ -77,24 +141,7 @@ const JobDetail = () => {
               <div className="row">
                 <div className="col-md-7">
                   <h2>{job.jobName}</h2>
-                  {job.status == "1" ? (
-                    <button
-                      type="submit"
-                      className="btn btn-success mt-2"
-                      onClick={applyJob1}
-                    >
-                      ỨNG TUYỂN
-                    </button>
-                  ) : (
-                    <button
-                      type="submit"
-                      className="btn btn-success mt-2"
-                      onClick={applyJob1}
-                      disabled={true}
-                    >
-                      ỨNG TUYỂN
-                    </button>
-                  )}
+                  {buttonApply(job.applyStatus ? job.applyStatus : 0)}
                 </div>
               </div>
 
@@ -130,7 +177,7 @@ const JobDetail = () => {
                     </tr>
                     <tr>
                       <td>Thời gian làm việc: </td>
-                      <td>@TODO</td>
+                      <td>{jobTimeVal()}</td>
                     </tr>
                     <tr>
                       <td>File mô tả chi tiết: </td>

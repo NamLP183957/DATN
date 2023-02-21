@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @PreAuthorize("hasAuthority('Business')")
 @RequestMapping("api/v1/business/manageApplicant")
-public class ManageApplicant {
+public class ManageApplicantController {
     private final ApplyService applyService;
 
     @GetMapping

@@ -24,9 +24,9 @@ const reducer = (state: InitialState = initialState, action: CVActionType): Init
         case CV_LOADING_DATA: 
             return { ...state, loading: true }
         case UPDATE_CV_SUCCESS:
-            return { ...state, loading: false, sucMsg: action.payload, errMsg: "" }
+            return { ...state, loading: false, cv: action.payload, sucMsg: action.message, errMsg: "" }
         case UPDATE_CV_FAILURE:
-            return { ...state, loading: false, sucMsg: "", errMsg: action.payload }
+            return { ...state, loading: false, cv: {}, sucMsg: "", errMsg: action.payload }
         case GET_CV_SUCCESS:
             return { ...state, loading: false, cv: action.payload, errMsg: "" }
         case GET_CV_WARN:

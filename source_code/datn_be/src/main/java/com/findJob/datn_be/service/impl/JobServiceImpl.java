@@ -23,10 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.Message;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -50,32 +47,85 @@ public class JobServiceImpl implements JobService {
     @Override
     public ServiceResult searchJob(JobSearchRequest request) {
         ServiceResult serviceResult = new ServiceResult();
-        List<JobResponse> lstJobResponse = jobRepository.getAllJob();
-        List<String> lstBusinessName = request.getLstBusinessName();
-        List<String> lstCategoryName = request.getLstCategoryName();
-        String jobName = request.getJobName();
-
-        if (lstBusinessName != null && lstBusinessName.size() > 0) {
-
-        }
-
-        if (lstCategoryName != null && lstCategoryName.size() > 0) {
-
-        }
-
-        if (jobName != null && "".equals(jobName)) {
-
-        }
+//        List<JobResponse> lstJobResponse = jobRepository.getAllJob();
+//        List<String> lstBusinessName = request.getLstBusinessName();
+//        List<String> lstCategoryName = request.getLstCategoryName();
+//        String jobName = request.getJobName();
+//
+//        if (lstBusinessName != null && lstBusinessName.size() > 0) {
+//
+//        }
+//
+//        if (lstCategoryName != null && lstCategoryName.size() > 0) {
+//
+//        }
+//
+//        if ("".equals(jobName)) {
+//
+//        }
+        List<JobResponse> lstJobResponse = jobRepository.searchJob(request);
+        serviceResult.setStatus(Constants.SUCCESS_RESULT);
+        serviceResult.setContent(lstJobResponse);
         return serviceResult;
     }
 
     @Override
-    public ServiceResult getJobDetail(String jobCode) {
+    public ServiceResult getJobDetail(String jobCode, String email) {
         ServiceResult serviceResult = new ServiceResult();
-        List<JobResponse> lstJobResponse = jobRepository.getJobDetail(jobCode);
-        serviceResult.setStatus(Constants.SUCCESS_RESULT);
-        if (lstJobResponse != null && lstJobResponse.size() > 0) {
-            serviceResult.setContent(lstJobResponse.get(0));
+        UserAccount userAccount = userAccountRepository.findByEmail(email);
+        if (userAccount == null) {
+            serviceResult.setStatus(Constants.ERROR_RESULT);
+            serviceResult.setMessage(MessageService.getMessage("unaothorize"));
+        } else {
+            List<JobResponse> lstJobResponse = jobRepository.getJobDetail(jobCode, userAccount.getId());
+            serviceResult.setStatus(Constants.SUCCESS_RESULT);
+            if (lstJobResponse != null && lstJobResponse.size() > 0) {
+                serviceResult.setContent(lstJobResponse.get(0));
+            }
+        }
+
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult getApplyingJob(String email) {
+        ServiceResult serviceResult = new ServiceResult();
+        UserAccount userAccount = userAccountRepository.findByEmail(email);
+        List<JobResponse> lstAppyingJob = new ArrayList<>();
+        if (userAccount == null) {
+            serviceResult.setStatus(Constants.ERROR_RESULT);
+            serviceResult.setMessage(MessageService.getMessage("unaothorize"));
+        } else {
+            lstAppyingJob = jobRepository.getApplyingJob(userAccount.getId());
+            if (lstAppyingJob == null || lstAppyingJob.size() == 0) {
+                serviceResult.setStatus(Constants.WARN_RESULT);
+                serviceResult.setMessage(MessageService.getMessage("job.applying.null"));
+            } else {
+                serviceResult.setStatus(Constants.SUCCESS_RESULT);
+                serviceResult.setContent(lstAppyingJob);
+            }
+        }
+
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult getAppliedJob(String email) {
+        ServiceResult serviceResult = new ServiceResult();
+        UserAccount userAccount = userAccountRepository.findByEmail(email);
+        List<JobResponse> lstAppyingJob = new ArrayList<>();
+        if (userAccount == null) {
+            serviceResult.setStatus(Constants.ERROR_RESULT);
+            serviceResult.setMessage(MessageService.getMessage("unaothorize"));
+        } else {
+            lstAppyingJob = jobRepository.getAppliedJob(userAccount.getId());
+            if (lstAppyingJob == null || lstAppyingJob.size() == 0) {
+                serviceResult.setStatus(Constants.WARN_RESULT);
+                serviceResult.setMessage(MessageService.getMessage("job.applying.null"));
+            } else {
+                serviceResult.setStatus(Constants.SUCCESS_RESULT);
+                serviceResult.setContent(lstAppyingJob);
+            }
         }
 
         return serviceResult;
@@ -231,6 +281,39 @@ public class JobServiceImpl implements JobService {
         } else {
             serviceResult.setStatus(Constants.ERROR_RESULT);
             serviceResult.setMessage(MessageService.getMessage("unaothorize"));
+        }
+
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult searchBusinessJob(String businesEmail, JobSearchRequest request) {
+        ServiceResult serviceResult = new ServiceResult();
+        UserAccount businessAcc = userAccountRepository.findByEmail(businesEmail);
+
+        if (businessAcc == null) {
+            serviceResult.setStatus(Constants.ERROR_RESULT);
+            serviceResult.setMessage(MessageService.getMessage("unaothorize"));
+        } else {
+            List<JobResponse> lstJobResponse = jobRepository.searchBusinessJob(request, businessAcc.getId());
+            serviceResult.setStatus(Constants.SUCCESS_RESULT);
+            serviceResult.setContent(lstJobResponse);
+        }
+
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult getBusinessJobDetail(String jobCode) {
+        ServiceResult serviceResult = new ServiceResult();
+        List<JobResponse> lstJobResponse = jobRepository.getBusinessJobDetail(jobCode);
+
+        if (lstJobResponse != null && lstJobResponse.size() > 0) {
+            serviceResult.setStatus(Constants.SUCCESS_RESULT);
+            serviceResult.setContent(lstJobResponse.get(0));
+        } else {
+            serviceResult.setStatus(Constants.ERROR_RESULT);
+            serviceResult.setMessage(MessageService.getMessage("job.code.not.exist"));
         }
 
         return serviceResult;

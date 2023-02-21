@@ -14,4 +14,9 @@ public class Constants {
     public static final int APPLYING = 2; // trang thai dang apply
 
     public static final String OK = "OK";
+
+    public static final int NOT_APPLY_STUDENT = 0;
+    public static final int APPLYIING_STUDENT = 1;
+    public static final int APPLIED_STUDENT = 2;
+
 }

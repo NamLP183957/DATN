@@ -10,7 +10,7 @@ export const UPDATE_AVATAR_SUCCESS = "UPDATE_AVATAR_SUCCESS";
 export const UPDATE_AVATAR_FAILURE = "UPDATE_AVATAR_FAILURE";
 
 export type CVLoadingDataActionType = {type: typeof CV_LOADING_DATA};
-export type UpdateCVSuccessActionType = {type: typeof UPDATE_CV_SUCCESS, payload: string};
+export type UpdateCVSuccessActionType = {type: typeof UPDATE_CV_SUCCESS, payload: Partial<StudentCV>, message: string};
 export type UpdateCVFailureActionType = {type: typeof UPDATE_CV_FAILURE, payload: string};
 export type GetCVSuccessActionType = {type: typeof GET_CV_SUCCESS, payload: StudentCV};
 export type GetCVWarnActionType = {type: typeof GET_CV_WARN, payload: string};

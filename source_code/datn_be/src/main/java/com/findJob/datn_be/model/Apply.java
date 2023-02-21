@@ -14,7 +14,6 @@ public class Apply {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "applies_id_seq")
     @SequenceGenerator(name = "applies_id_seq", sequenceName = "applies_id_seq", initialValue = 4, allocationSize = 1)
     private Long id;
-
     private Long studentCVId;
     private Long jobId;
     private Date startTime;

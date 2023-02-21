@@ -7,4 +7,6 @@ public interface JobCategoryService {
     ServiceResult getAllJobCategory();
 
     ServiceResult updateJobCategory(JobCategory request);
+
+    ServiceResult getBusinessJobCategory(String email);
 }

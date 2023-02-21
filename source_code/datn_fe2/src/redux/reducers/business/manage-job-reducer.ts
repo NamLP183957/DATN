@@ -1,20 +1,25 @@
+import { JobCategory } from "../../../types/response/JobCategory"
 import { JobResponse } from "../../../types/response/JobResponse"
-import { GET_BUSINESS_JOBS_FAILURE, GET_BUSINESS_JOBS_SUCCESS, GET_JOB_BY_CODE_FAILURE, GET_JOB_BY_CODE_SUCCESS, ManageJobActionType, MANAGE_JOB_LOADING_DATA, UPDATE_JOB_FAILURE, UPDATE_JOB_SUCCESS } from "../../action-types/business/manage-job-action-type"
+import { GET_BUSINESS_JOBS_FAILURE, GET_BUSINESS_JOBS_SUCCESS, GET_BUSINESS_JOB_CATEGORY_FAILURE, GET_BUSINESS_JOB_CATEGORY_SUCCESS, GET_JOB_BY_CODE_FAILURE, GET_JOB_BY_CODE_SUCCESS, ManageJobActionType, MANAGE_JOB_LOADING_DATA, UPDATE_JOB_FAILURE, UPDATE_JOB_SUCCESS } from "../../action-types/business/manage-job-action-type"
 
 export type InitialState = {
     loading: boolean,
     jobs: Array<JobResponse>,
     job: Partial<JobResponse>,
+    jobCats: Array<JobCategory>,
     sucMsg: string,
-    errMsg: string
+    errMsg: string,
+    catErrMsg: string,
 }
 
 const initialState: InitialState = {
     loading: false,
     jobs: [],
     job: {},
+    jobCats: [],
     sucMsg: "",
-    errMsg: ""
+    errMsg: "",
+    catErrMsg: ""
 }
 
 const reducer = (state: InitialState = initialState, action: ManageJobActionType): InitialState => {
@@ -33,6 +38,10 @@ const reducer = (state: InitialState = initialState, action: ManageJobActionType
             return { ...state, loading: false, sucMsg: action.payload, errMsg: "" }
         case UPDATE_JOB_FAILURE:
             return { ...state, loading: false, sucMsg: "", errMsg: action.payload }
+        case GET_BUSINESS_JOB_CATEGORY_SUCCESS:
+            return { ...state, loading: false, jobCats: action.payload, catErrMsg: "" }
+        case GET_BUSINESS_JOB_CATEGORY_FAILURE: 
+            return { ...state, loading: false, jobCats: [], catErrMsg: action.payload }
         default:
             return state
     }
