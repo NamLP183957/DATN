@@ -1,0 +1,86 @@
+\begingroup
+\footnotesize
+\begin{longtable}{| p{2cm} | p{8cm} |}
+\caption{Đặc tả use case Create question}
+\label{table:dac-ta-use-case-create-question} \\
+\endfirsthead
+\multicolumn{2}{c}{\tablename\ \thetable\ -- \textit{Tiếp tục từ trang trước}}\\[12pt]
+\hline
+\endhead
+\hline
+\multicolumn{2}{r}{\tablename\ \thetable\ -- \textit{Còn nữa ở trang tiếp}} \\
+\endfoot
+\hline
+\endlastfoot
+\hline
+\textbf{Mã use case} & UC002 \\
+\hline
+\textbf{Tên use case} & Create question \\
+\hline
+\textbf{Tác nhân} & Giáo viên \\
+\hline
+\textbf{Tiền điều kiện} & Tác nhân đăng nhập thành công \\
+\hline
+\textbf{Luồng sự kiện chính (thành công)} & 
+
+\begin{tabular}{|>{\centering\arraybackslash}p{1cm}|p{1.5cm}|p{4cm}|}
+\hline
+\textbf{STT} & \textbf{Thực hiện bởi} & \textbf{Hành động} \\ \hline
+    1      &     Giáo viên      &     nhập các trường thông tin cho câu hỏi (*)      \\ \hline
+    2      &     Giáo viên      &     nhập các đáp án (**)      \\ \hline
+    3      &     Hệ thống      &    kiểm tra xem người dùng đã nhập đủ thông tin bắt buộc cho câu hỏi hay chưa       \\ \hline
+    4      &     Hệ thống      &     kiểm tra xem thông tin các câu hỏi có hợp lệ hay không      \\ \hline
+    5      &     Hệ thống      &     kiểm tra xem nội dung câu hỏi có bị trùng với các câu hỏi khác trong hệ thông hay không      \\ \hline
+    6      &     Hệ thống      &     kiểm tra xem người dùng có nhập từ 2 đến 6 đáp án hay chưa      \\ \hline
+    7      &     Hệ thống      &     kiểm tra xem người dùng đã nhập đủ thông tin cho các đáp án hay chưa, và đã có đáp án nào là đáp án đúng không      \\ \hline
+    8      &     Hệ thống      &     tạo câu hỏi theo thông tin người dùng vừa nhập, trong đó thông tin môn học được gán dựa theo môn học mà giáo viên dạy     \\ \hline
+\end{tabular}
+\\
+\hline
+\textbf{Luồng sự kiện thay thế} & 
+
+\begin{tabular}{|>{\centering\arraybackslash}p{1cm}|p{1.5cm}|p{4cm}|}
+\hline
+\textbf{STT} & \textbf{Thực hiện bởi} & \textbf{Hành động} \\ \hline
+    4a      &     Hệ thống      &     thông báo người dùng cần nhập trường thông tin thiếu      \\ \hline
+    5a      &     Hệ thống      &    thông báo người dùng cần nhập đúng các thông tin hợp lệ cho câu hỏi     \\ \hline
+    6a      &     Hệ thống      &    thông báo nội dung câu hỏi đã bị trùng với một câu hỏi khác trong hệ thống     \\ \hline
+    7a      &     Hệ thống      &    thông báo người dùng cần nhập từ 2 – 6 đáp án      \\ \hline
+    8a      &     Hệ thống      &    thông báo người dùng cần nhập đủ thông tin cho các đáp án và có ít nhất 1 đáp án đúng     \\ \hline
+\end{tabular}
+
+\\ 
+\hline
+\textbf{Hậu điều kiện} & Không\\
+\hline
+\end{longtable}
+\endgroup
+
+
+
+---- Bảng bình thường
+
+
+\begingroup
+\footnotesize
+\begin{longtable}{| p{2cm} | p{8cm} |}
+\caption{Đặc tả use case Create question}
+\label{table:dac-ta-use-case-create-question} \\
+\endfirsthead
+\multicolumn{2}{c}{\tablename\ \thetable\ -- \textit{Tiếp tục từ trang trước}}\\[12pt]
+\hline
+\endhead
+\hline
+\multicolumn{2}{r}{\tablename\ \thetable\ -- \textit{Còn nữa ở trang tiếp}} \\
+\endfoot
+\hline
+\endlastfoot
+\hline
+\textbf{Mã use case} & UC002 \\
+\hline
+\textbf{Tên use case} & Create question \\
+\hline
+\textbf{Tác nhân} & Giáo viên \\
+
+\end{longtable}
+\endgroup

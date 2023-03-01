@@ -19,6 +19,7 @@ import BusinessCV from "./pages/business/cv/BusinessCV";
 import AdminHome from "./pages/admin/home/AdminHome";
 import AdminJobCategory from "./pages/admin/job-category/AdminJobCategory";
 import AdminAccount from "./pages/admin/account/AdminAccount";
+import AddJob from "./pages/business/job-detail/AddJob";
 function App() {
   return (
     <div>
@@ -42,8 +43,9 @@ function App() {
             <Route path="/business/home" element={<BusinessHome />} />
             <Route path="/business/job/:jobCode/*" element={<BusinessJobDetail />}/>
             <Route path="/business/apply" element={<BusinessApply />} />
-            <Route path="/business/apply/:jobCode/:id" element={<JobApplicant />}/>
+            <Route path="/business/apply/:jobCode/:studentId" element={<JobApplicant />}/>
             <Route path="/business/cv" element={<BusinessCV />} />
+            <Route path="/business/job/add" element={<AddJob />}/>
           </Route>
 
           <Route element={<RequireAuth allowedRoles={ROLES.ADMIN} />}>

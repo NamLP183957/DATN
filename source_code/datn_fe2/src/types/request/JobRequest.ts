@@ -1,23 +1,23 @@
 import { JobTimeRequest2 } from "./JobTimeRequest2"
 
 export type JobRequest = {
-    id: number,
-    jobCode: string,
-    jobName: string,
-    description: string,
-    requirement: string,
-    workAddress: string,
+    id?: number,
+    jobCode?: string,
+    jobName?: string,
+    description?: string,
+    requirement?: string,
+    workAddress?: string,
     // Tính bằng VND
-    salary: number,
-    status: number,
-    note: string,
+    salary?: number,
+    status?: number,
+    note?: string,
 
     // Tính bằng ngày
-    rangeDay: number,
-    jobCategoryId: number,
-    businessId: number,
+    rangeDay?: number,
+    jobCategoryId?: number,
+    businessId?: number,
 
-    lstJobTimeReq: JobTimeRequest2[]
+    lstJobTimeReq?: JobTimeRequest2[]
 
     // monStartTimeHour: number,
     // monStartTimeMin: number,

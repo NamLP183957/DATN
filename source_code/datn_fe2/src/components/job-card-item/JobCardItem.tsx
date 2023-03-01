@@ -18,7 +18,7 @@ const JobCardItem: FC<PropsType> = ({
   btnName,
 }) => {
   return (
-    <div key={job.id} className={`col-lg-${colSize}`}>
+    <div key={job.id} className={`col-lg-${colSize} mb-2`}>
       <Link to={`${link}/${job.jobCode}`} style={{ color: "black" }}>
         <div className="row pt-2" style={{ border: "0.5px solid black" }}>
           <div className="col-lg-2">

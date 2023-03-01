@@ -24,4 +24,6 @@ public interface JobService {
     ServiceResult searchBusinessJob(String businesEmail, JobSearchRequest request);
 
     ServiceResult getBusinessJobDetail(String jobCode);
+
+    ServiceResult addJob(JobRequest jobRequest, String email);
 }

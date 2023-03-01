@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Toast } from 'react-bootstrap'
-import './Toasts.css'
+import './Toast.css'
 
 type PropsType = {
     showToast: boolean

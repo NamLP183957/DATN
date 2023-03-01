@@ -1,5 +1,8 @@
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom';
 import CheckBox from '../../../components/checkbox/CheckBox';
 import MenuCard from '../../../components/menu-card/MenuCard';
 import ScrollButton from '../../../components/scroll-button/ScrollButton';
@@ -44,8 +47,11 @@ const BusinessHome = () => {
     <div className="container d-flex">
       <ScrollButton />
       <div id="sidebar">
-        <div className="sidebar-header">
+        <div className="sidebar-header row">
           <h3>Công việc</h3>
+          <Link to="/business/job/add" className='btn btn-warning ml-2'>
+            <FontAwesomeIcon className='' icon={faPlus}/>
+          </Link>
         </div>
         <ul className="list-unstyled components">
           <h5>Ngành</h5>

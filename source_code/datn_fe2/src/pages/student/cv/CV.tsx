@@ -13,6 +13,7 @@ import { AppStateType } from "../../../redux/reducers/root-reducer";
 import { getCV } from "../../../redux/thunks/student/cv-thunk";
 import { StudentCV } from "../../../types/response/StudentCV";
 import { Constants } from "../../../utils/constants/constants";
+import { UploadChangeParam } from "antd/lib/upload/interface";
 import "./CV.css";
 import EditCV from "./EditCV";
 const CV = () => {
@@ -47,9 +48,15 @@ const CV = () => {
     additional,
   } = cv;
 
+  const [file, setFile] = React.useState<string>("");
+
   useEffect(() => {
     dispatch(getCV());
   }, []);
+
+  const handleUpload =({ file }: UploadChangeParam<any>): void => {
+    setFile(file);
+  }
 
   return (
     <div className="container" >
@@ -75,6 +82,7 @@ const CV = () => {
               <FontAwesomeIcon className="mr-2" icon={faEdit}/>
               Đổi ảnh
             </button>
+            {/* <input type="file" className="btn btn-dark mt-4"/> */}
           </div>
           <div className="personal-data col-md-4">
             {errMsg ? (

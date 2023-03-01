@@ -1,13 +1,16 @@
 package com.findJob.datn_be.service.impl;
 
 import com.findJob.datn_be.dto.request.PYCRequest;
+import com.findJob.datn_be.dto.response.ApplicantDetailResponse;
 import com.findJob.datn_be.dto.response.ApplicantResponse;
 import com.findJob.datn_be.model.Apply;
 import com.findJob.datn_be.model.UserAccount;
 import com.findJob.datn_be.model.job.Job;
+import com.findJob.datn_be.model.student.StudentCV;
 import com.findJob.datn_be.repository.ApplyRepository;
 import com.findJob.datn_be.repository.JobRepository;
 import com.findJob.datn_be.repository.UserAccountRepository;
+import com.findJob.datn_be.repository.student.StudentCVRepository;
 import com.findJob.datn_be.security.email.MailSender;
 import com.findJob.datn_be.service.ApplyService;
 import com.findJob.datn_be.service.MessageService;
@@ -45,6 +48,21 @@ public class ApplyServiceImpl implements ApplyService {
     }
 
     @Override
+    public ServiceResult getApplicantDetail(String busiEmail, String jobCode, Long studentId) {
+        ServiceResult serviceResult = new ServiceResult();
+        UserAccount busiAccount = userAccountRepository.findByEmail(busiEmail);
+        if (busiAccount != null) {
+            ApplicantDetailResponse detailResponse = applyRepository.getApplicantDetail(busiAccount.getId(), jobCode, studentId);
+            serviceResult.setStatus(Constants.SUCCESS_RESULT);
+            serviceResult.setContent(detailResponse);
+        } else {
+            serviceResult.setStatus(Constants.ERROR_RESULT);
+            serviceResult.setMessage(MessageService.getMessage("unaothorize"));
+        }
+        return serviceResult;
+    }
+
+    @Override
     public ServiceResult approveOrReject(String email, PYCRequest request) {
         ServiceResult serviceResult = new ServiceResult();
         UserAccount userAccount = userAccountRepository.findByEmail(email);
@@ -73,10 +91,21 @@ public class ApplyServiceImpl implements ApplyService {
                 }
                 String subject = "Result of apply job";
                 Map<String, Object> attributes = new HashMap<>();
-                attributes.put("jobNamw", job.getJobName());
+                attributes.put("jobName", job.getJobName());
+                UserAccount studentAcc = userAccountRepository.getById(request.getStudentCVId());
 
                 try {
-                    mailSender.sendMessageHtml(userAccount.getEmail(), subject, template, attributes);
+                    mailSender.sendMessageHtml(studentAcc.getEmail(), subject, template, attributes);
+                    ApplicantDetailResponse detailResponse = applyRepository.getApplicantDetail(userAccount.getId(), job.getJobCode(), request.getStudentCVId());
+                    System.out.println(detailResponse.toString());
+                    serviceResult.setContent(detailResponse);
+                    serviceResult.setStatus(Constants.SUCCESS_RESULT);
+
+                    if (request.getStatus() == Constants.CLOSE_APPLY) {
+                        serviceResult.setMessage(MessageService.getMessage("apply.reject.success"));
+                    } else if (request.getStatus() == Constants.SUCCESS_APPLY) {
+                        serviceResult.setMessage(MessageService.getMessage("apply.approve.success"));
+                    }
                 } catch (Exception e) {
                     serviceResult.setStatus(Constants.ERROR_RESULT);
                     serviceResult.setMessage(MessageService.getMessage("system.error"));

@@ -96,7 +96,7 @@ const Home = () => {
           data={jobs}
           loading={loading}
           itemsPerPage={16}
-          link="/student/code"
+          link="/student/job"
           searchByData={[
             { label: "Ngành", value: "jobCategory" },
             { label: "Doanh nghiệp", value: "businessName" },

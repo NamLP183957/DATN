@@ -24,4 +24,16 @@ public class JobTime {
     private Integer dayOfWeek;
 
     private Long jobId;
+
+    public JobTime() {
+
+    }
+
+    public JobTime(Long id, Long jobId, LocalTime startTime, LocalTime endTime, Integer dayOfWeek) {
+        this.id = id;
+        this.jobId = jobId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.dayOfWeek = dayOfWeek;
+    }
 }

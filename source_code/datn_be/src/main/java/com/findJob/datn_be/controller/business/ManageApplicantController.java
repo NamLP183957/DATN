@@ -27,4 +27,11 @@ public class ManageApplicantController {
                                                                   @RequestBody PYCRequest request) {
         return ResponseEntity.ok(applyService.approveOrReject(userPrincipal.getEmail(), request));
     }
+
+    @GetMapping("/detail/{jobCode}/{studentId}")
+    public ResponseEntity<ServiceResult> getApplicantDetail(@AuthenticationPrincipal UserPrincipal busiPrincipal,
+                                                            @PathVariable("jobCode")String jobCode,
+                                                            @PathVariable("studentId") Long studentId) {
+        return ResponseEntity.ok(applyService.getApplicantDetail(busiPrincipal.getEmail(), jobCode, studentId));
+    }
 }

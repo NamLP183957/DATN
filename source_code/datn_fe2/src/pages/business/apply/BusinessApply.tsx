@@ -1,5 +1,8 @@
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom';
 import { AppStateType } from '../../../redux/reducers/root-reducer';
 import { getApplicants } from '../../../redux/thunks/business/manage-applicant-thunk';
 import { ApplicantResponse } from '../../../types/response/ApplicantResponse';
@@ -40,7 +43,15 @@ const BusinessApply = () => {
             <td>{applicant.jobCode}</td>
             <td>{applicant.jobName}</td>
             <td>{applicant.email}</td>
-            <td><button>Chi tiết</button></td>
+            <td>
+              <Link
+                to={`/business/apply/${applicant.jobCode}/${applicant.studentId}`}
+                className="btn btn-info"
+              >
+                <FontAwesomeIcon className='mr-2' icon={faEdit}/>
+                Chi tiết
+              </Link>
+            </td>
           </tbody>
         ))}
       </table>

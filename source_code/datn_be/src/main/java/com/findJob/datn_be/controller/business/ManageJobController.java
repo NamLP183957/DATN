@@ -36,6 +36,11 @@ public class ManageJobController {
         return ResponseEntity.ok(jobCategoryService.getBusinessJobCategory(userPrincipal.getEmail()));
     }
 
+    @GetMapping("/all-job-category")
+    public ResponseEntity<ServiceResult> getAllJobCategory(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        return ResponseEntity.ok(jobCategoryService.getAllJobCategory());
+    }
+
     @GetMapping("/{jobCode}")
     public ResponseEntity<ServiceResult> getJobByJobCode(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                                          @PathVariable(name = "jobCode")String jobCode) {
@@ -48,4 +53,9 @@ public class ManageJobController {
         return ResponseEntity.ok(jobService.updateJob(jobRequest, userPrincipal.getEmail()));
     }
 
+    @PostMapping("/add-job")
+    public ResponseEntity<ServiceResult> addJob(@AuthenticationPrincipal UserPrincipal userPrincipal,
+                                                @RequestBody JobRequest jobRequest) {
+        return ResponseEntity.ok(jobService.addJob(jobRequest, userPrincipal.getEmail()));
+    }
 }

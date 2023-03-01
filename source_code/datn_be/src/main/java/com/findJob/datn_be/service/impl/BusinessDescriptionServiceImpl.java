@@ -24,4 +24,21 @@ public class BusinessDescriptionServiceImpl implements BusinessDescriptionServic
         serviceResult.setContent(lstBusiness);
         return serviceResult;
     }
+
+    @Override
+    public ServiceResult getBusinessDescription(String email) {
+        ServiceResult serviceResult = new ServiceResult();
+        BusinessDescriptionResponse businessDescriptionResponse = null;
+        try {
+            businessDescriptionResponse = businessRepository.getBusinesByEmail(email);
+            serviceResult.setStatus(Constants.SUCCESS_RESULT);
+            serviceResult.setContent(businessDescriptionResponse);
+            return serviceResult;
+        } catch (Exception e) {
+            serviceResult.setStatus(Constants.ERROR_RESULT);
+            serviceResult.setMessage(e.getMessage());
+            return serviceResult;
+        }
+
+    }
 }

@@ -7,5 +7,7 @@ public interface ApplyService {
 
     ServiceResult getLstApplicant(String email);
 
+    ServiceResult getApplicantDetail(String busiEmail, String jobCode, Long studentId);
+
     ServiceResult approveOrReject(String email, PYCRequest request);
 }

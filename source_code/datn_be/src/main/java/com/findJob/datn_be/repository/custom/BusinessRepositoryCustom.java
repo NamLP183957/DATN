@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface BusinessRepositoryCustom {
     List<BusinessDescriptionResponse> getAllBusiness();
+
+    BusinessDescriptionResponse getBusinesByEmail(String email) throws Exception;
 }

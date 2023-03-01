@@ -22,6 +22,10 @@ public class Apply {
 
     private Long appriciateId;
 
+    public Apply() {
+
+    }
+
     public Apply(Long studentCVId, Long jobId, Date startTime, Integer status) {
         this.studentCVId = studentCVId;
         this.jobId = jobId;

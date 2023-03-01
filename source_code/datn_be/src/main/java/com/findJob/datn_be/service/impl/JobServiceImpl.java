@@ -2,6 +2,8 @@ package com.findJob.datn_be.service.impl;
 
 import com.findJob.datn_be.dto.request.JobRequest;
 import com.findJob.datn_be.dto.request.JobSearchRequest;
+import com.findJob.datn_be.dto.request.JobTimeRequest;
+import com.findJob.datn_be.dto.request.JobTimeRequest2;
 import com.findJob.datn_be.dto.response.JobResponse;
 import com.findJob.datn_be.mapper.JobMappper;
 import com.findJob.datn_be.model.Apply;
@@ -252,18 +254,33 @@ public class JobServiceImpl implements JobService {
 
         if (userAccount != null) {
             Long jobReqId = jobRequest.getId();
-            Job updateJob = new Job();
             List<JobTime> lstJobTime;
-            if (jobReqId == null) {
+            if (jobReqId != null) {
                 // Cap nhat job
-                updateJob = jobRepository.findById(jobReqId).get();
+                Job updateJob = jobRepository.findById(jobReqId).get();
                 if (updateJob != null) {
                     jobMappper.convertToEntity(updateJob, jobRequest);
-                    lstJobTime = jobMappper.convertJobTimesToLstEntity(jobReqId, jobRequest.getLstJobTime());
+                    updateJob.setBusinessId(userAccount.getId());
                     jobRepository.save(updateJob);
-                    for (JobTime jobTime : lstJobTime) {
-                        jobTimeRepository.save(jobTime);
+
+                    for (JobTimeRequest2 jobTimeRequest : jobRequest.getLstJobTimeReq()) {
+                        if (jobTimeRequest.getId() != 0) {
+                            // Cap nhat job time
+                            JobTime updateJobTime = jobTimeRepository.findById(jobTimeRequest.getId()).get();
+                            jobMappper.convertToJobTimeEntity(updateJob.getId(), updateJobTime, jobTimeRequest);
+                            jobTimeRepository.save(updateJobTime);
+                        } else {
+                            // Them moi job time
+                            JobTime newJobTime = new JobTime();
+                            jobMappper.convertToJobTimeEntity(updateJob.getId(), newJobTime, jobTimeRequest);
+                            jobTimeRepository.save(newJobTime);
+                        }
                     }
+                    List<JobResponse> lstJobResponse = jobRepository.getBusinessJobDetail(updateJob.getJobCode());
+
+                    serviceResult.setStatus(Constants.SUCCESS_RESULT);
+                    serviceResult.setMessage(MessageService.getMessage("job.update.success"));
+                    serviceResult.setContent(lstJobResponse.get(0));
                 } else {
                     serviceResult.setStatus(Constants.ERROR_RESULT);
                     serviceResult.setMessage(MessageService.getMessage("job.id.invalid"));
@@ -271,13 +288,75 @@ public class JobServiceImpl implements JobService {
                 }
             } else {
                 // Them moi job
-                jobMappper.convertToEntity(updateJob, jobRequest);
-                jobRepository.save(updateJob);
-                lstJobTime = jobMappper.convertJobTimesToLstEntity(updateJob.getId(), jobRequest.getLstJobTime());
-                for (JobTime jobTime : lstJobTime) {
-                    jobTimeRepository.save(jobTime);
+                Job newJob = new Job();
+                jobMappper.convertToEntity(newJob, jobRequest);
+                newJob.setBusinessId(userAccount.getId());
+                jobRepository.save(newJob);
+
+                for (JobTimeRequest2 jobTimeRequest : jobRequest.getLstJobTimeReq()) {
+                    if (jobTimeRequest.getId() != 0) {
+                        // Cap nhat job time
+                        JobTime updateJobTime = jobTimeRepository.findById(jobTimeRequest.getId()).get();
+                        jobMappper.convertToJobTimeEntity(newJob.getId(), updateJobTime, jobTimeRequest);
+                        jobTimeRepository.save(updateJobTime);
+                    } else {
+                        // Them moi job time
+                        JobTime newJobTime = new JobTime();
+                        jobMappper.convertToJobTimeEntity(newJob.getId(), newJobTime, jobTimeRequest);
+                        jobTimeRepository.save(newJobTime);
+                    }
                 }
+
+                List<JobResponse> lstJobResponse = jobRepository.getBusinessJobDetail(newJob.getJobCode());
+
+                serviceResult.setStatus(Constants.SUCCESS_RESULT);
+                serviceResult.setMessage(MessageService.getMessage("job.create.success"));
+                serviceResult.setContent(lstJobResponse.get(0));
             }
+        } else {
+            serviceResult.setStatus(Constants.ERROR_RESULT);
+            serviceResult.setMessage(MessageService.getMessage("unaothorize"));
+        }
+
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult addJob(JobRequest jobRequest, String email) {
+        ServiceResult serviceResult = new ServiceResult();
+        UserAccount userAccount = userAccountRepository.findByEmail(email);
+
+        if (userAccount != null) {
+            Long jobReqId = jobRequest.getId();
+            List<JobTime> lstJobTime;
+
+                // Them moi job
+                Job newJob = new Job();
+                jobMappper.convertToEntity(newJob, jobRequest);
+                newJob.setBusinessId(userAccount.getId());
+                newJob.setStatus(Constants.OPEN_JOB);
+                jobRepository.save(newJob);
+
+                for (JobTimeRequest2 jobTimeRequest : jobRequest.getLstJobTimeReq()) {
+                    if (jobTimeRequest.getId() != 0) {
+                        // Cap nhat job time
+                        JobTime updateJobTime = jobTimeRepository.findById(jobTimeRequest.getId()).get();
+                        jobMappper.convertToJobTimeEntity(newJob.getId(), updateJobTime, jobTimeRequest);
+                        jobTimeRepository.save(updateJobTime);
+                    } else {
+                        // Them moi job time
+                        JobTime newJobTime = new JobTime();
+                        jobMappper.convertToJobTimeEntity(newJob.getId(), newJobTime, jobTimeRequest);
+                        jobTimeRepository.save(newJobTime);
+                    }
+                }
+
+//                List<JobResponse> lstJobResponse = jobRepository.getBusinessJobDetail(newJob.getJobCode());
+
+                serviceResult.setStatus(Constants.SUCCESS_RESULT);
+                serviceResult.setMessage(MessageService.getMessage("job.create.success"));
+//                serviceResult.setContent(lstJobResponse.get(0));
+
         } else {
             serviceResult.setStatus(Constants.ERROR_RESULT);
             serviceResult.setMessage(MessageService.getMessage("unaothorize"));
